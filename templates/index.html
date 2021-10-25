@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Price Prediction</title>
+
+    <style>
+        body {
+            background-color: lightslategray;
+            text-align: center;
+            padding: 0px;
+        }
+        
+        #box {
+            border-radius: 60px;
+            border-color: 45px;
+            border-style: solid;
+            font-family: cursive;
+            text-align: center;
+            background-color: rgb(168, 131, 61);
+            font-size: medium;
+            position: absolute;
+            width: 700px;
+            bottom: 9%;
+            height: 850px;
+            right: 30%;
+            padding: 0px;
+            margin: 0px;
+            font-size: 14px;
+        }
+        
+        .selct {
+            width: 180px;
+            height: 43px;
+            text-align: center;
+            border-radius: 14px;
+            font-size: 18px;
+        }
+        
+        .selct:hover {
+            background-color: coral;
+        }
+        
+        #sub {
+            width: 140px;
+            height: 50px;
+            text-align: center;
+            border-radius: 14px;
+            font-size: 18px;
+        }
+        
+        #sub:hover {
+            background-color: darkcyan;
+        }
+        
+        .int_input {
+            border-radius: 14px;
+            height: 25px;
+            font-size: 20px;
+            text-align: center;
+        }
+        h2 {
+            color: black;
+            font-size: 40px;
+            background-color: whitesmoke;
+        }
+        
+    </style>
+</head>
+
+<body>
+
+    <div style="color:blue">
+        <form action="{{ url_for('predict')}}" method="post">
+            <h2>Football Player Price Prediction</h2>
+            <h3>Age</h3>
+            <input id="first" class="int_input" name="age" type="number step=any">
+            <h3>Position</h3><br>
+            <select id="pos" name="position" class="selct" required="required">
+                <option value="AM">Attacking Midfielder</option>
+                <option value="CB">Center Back</option>
+                <option value="CF">Center Forward</option>
+                <option value="CM">Center Midfielder</option>
+                <option value="DM">Defensive Midfielder</option>
+                <option value="GK">GoalKeeper</option>
+                <option value="LB">Left Back</option>
+                <option value="LM">Left Midfielder</option>
+                <option value="LW">Left Wing</option>
+                <option value="RB">Right Back</option>
+                <option value="RM">Right Midfielder</option>
+                <option value="RW">Right Wing</option>
+                <option value="SS">Second Striker</option>
+            </select>
+            <h3>Position Category</h3><br><select name="position_cat" id="pos_cat" class="selct" required="required">
+                <option value="1">Attacker</option>
+                <option value="2">Midfielder</option>
+                <option value="3">Defender</option>
+                <option value="4">Goalkeeper</option>
+            </select>
+            <h3>Page Views</h3><input id="pg_view" class="int_input" name="page_views" required="required" type="number" step=any>
+            <h3>FPL Value</h3><br><input id="fpl_val" class="int_input" name="fpl_value" required="required" type="number" step=any>
+            <h3>FLP Sel</h3><br><input id="flp_sel" class="int_input" name="flp_sel" required="required" type="number" step=any>
+            <h3>FPL Points</h3><input id="fpl_pnt" class="int_input" name="fpl_points" required="required" type="number" step=any>
+            
+            
+            <h3>Region</h3><br><select name="region" id="region" class="selct" required="required">
+                <option value="1">England</option>
+                <option value="2">EU</option>
+                <option value="3">Americas</option>
+                <option value="4">Rest of World</option>
+            </select>
+            <h3>New Foreign</h3><br><select name="new_foreign" id="new_fgn" class="selct" required="required">
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select>
+            <h3>Age Category</h3><br><select name="age_cat" id="age_cat" class="selct" required="required">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+            </select>
+            <h3>Club ID</h3><br>
+            <select id="club_id" name="club_id" class="selct" required="required">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+                <option value="13">13</option>
+                <option value="14">14</option>
+                <option value="15">15</option>
+                <option value="16">16</option>
+                <option value="17">17</option>
+                <option value="18">18</option>
+                <option value="19">19</option>
+                <option value="20">20</option>
+            </select>
+
+            <h3>Big Club</h3><br><select name="big_club" id="big_clb" class="selct" required="required">
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select>
+            <h3>New Signing</h3><br><select name="new_signing" id="new_sgn" class="selct" required="required">
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select>
+            <br><br><button id="sub" type="submit ">Calculate Player Price</button>
+            <br>
+        </form>
+        <br>
+        <br>
+        <h3>{{ prediction_text }}<h3>
+    </div>
+</body>
+
+</html>
