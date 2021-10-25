@@ -9,7 +9,8 @@ import scipy.stats as stat
 from scipy.special import inv_boxcox1p
 
 app = Flask(__name__)
-model = pickle.load(open('random_forest_regression_model.pkl', 'rb'))
+
+model = pickle.load(open('gredientboostingRegresasor.pkl', 'rb'))
 enc = pickle.load(open('encoder.pickle', 'rb'))
 lamda_dict_boxcox_transformation = {
     'age': 0.6018414717768876,
@@ -22,7 +23,6 @@ lamda_dict_boxcox_transformation = {
 @app.route('/',methods=['GET'])
 def Home():
     return render_template('index.html')
-
 
 @app.route("/predict", methods=['POST'])
 def predict():
@@ -42,19 +42,6 @@ def predict():
         club_id = request.form['club_id']
         big_club = request.form['big_club']
         new_sining = request.form['new_signing']
-        print(age)
-        print(position)
-        print(position_cat)
-        print(page_views)
-        print(fpl_value)
-        print(fpl_sel)
-        print(fpl_points)
-        print(region)
-        print(new_foreign)
-        print(age_cat)
-        print(club_id)
-        print(big_club)
-        print(new_sining)
         
         continuous_feature = {
             'age':float(age), 
@@ -80,11 +67,12 @@ def predict():
             float(big_club),
             float(new_sining),
         ]
+
         encoded__pos_vector = list(enc.transform([[str(position)]]).toarray()[0])
         data_vector = data + encoded__pos_vector[1:]
         prediction = model.predict([data_vector])
         output = inv_boxcox1p(prediction, lamda_dict_boxcox_transformation['market_value'])
-        return render_template('index.html',prediction_text="Player Price is {}".format(output))
+        return render_template('index.html',prediction_text="Player Price is {}".format(output[0]))
     else:
         return render_template('index.html')
 
